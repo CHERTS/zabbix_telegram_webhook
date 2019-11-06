@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>4.4</version>
+    <date>2019-11-06T09:04:41Z</date>
+    <media_types>
+        <media_type>
+            <name>Telegram via Webhook</name>
+            <type>WEBHOOK</type>
+            <parameters>
+                <parameter>
+                    <name>subj</name>
+                    <value>{ALERT.SUBJECT}</value>
+                </parameter>
+                <parameter>
+                    <name>message</name>
+                    <value>{ALERT.MESSAGE}</value>
+                </parameter>
+                <parameter>
+                    <name>token</name>
+                    <value>XXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</value>
+                </parameter>
+                <parameter>
+                    <name>parse_mode</name>
+                    <value>html</value>
+                </parameter>
+                <parameter>
+                    <name>disable_web_page_preview</name>
+                    <value>true</value>
+                </parameter>
+                <parameter>
+                    <name>chat_id</name>
+                    <value>{ALERT.SENDTO}</value>
+                </parameter>
+            </parameters>
+            <script>try {&#13;
+   zbx_debug_level = 3;&#13;
+   Zabbix.Log(zbx_debug_level, 'Webhook request value: ' + value);&#13;
+   params = JSON.parse(value),&#13;
+   req = new CurlHttpRequest(),&#13;
+   fields = {};&#13;
+   var result = {'chat_id': params.chat_id}; &#13;
+   req.AddHeader('Content-Type: application/json');&#13;
+   // Docs: https://tlgrm.ru/docs/bots/api#sendmessage&#13;
+   fields.chat_id = params.chat_id;&#13;
+   fields.parse_mode = params.parse_mode; //markdown or html&#13;
+   fields.disable_web_page_preview = params.disable_web_page_preview; //true or false&#13;
+   params.message = params.message.replace(/\\U\+([\d\w]{4,5})/gi, function(match, grp) {&#13;
+        return String.fromCharCode(parseInt(grp, 16));&#13;
+   });&#13;
+   fields.text = params.subj + '\r\n' + params.message;&#13;
+   raw_response = req.Post('https://api.telegram.org/bot' + params.token + '/sendMessage',&#13;
+       JSON.stringify(fields, ['chat_id', 'parse_mode', 'disable_web_page_preview', 'text'])&#13;
+   );&#13;
+   if (req.Status() &gt; 0) {&#13;
+      json_response = JSON.parse(raw_response);&#13;
+      if (!json_response.ok) {&#13;
+         result.error_code = json_response.error_code;&#13;
+         result.error_description = json_response.description;&#13;
+         throw 'Response code: ' + json_response.error_code + ', Reason: ' + json_response.description;&#13;
+      }&#13;
+      result.message_id = json_response.result.message_id;&#13;
+   } else {&#13;
+      result.error_code = req.Status();&#13;
+      throw 'Response code: ' + req.Status();&#13;
+   }&#13;
+   Zabbix.Log(zbx_debug_level, 'Response code: ' + req.Status());&#13;
+} catch (error) {&#13;
+   Zabbix.Log(zbx_debug_level, 'Telegram failed json: ' + JSON.stringify(fields, ['chat_id', 'parse_mode', 'disable_web_page_preview', 'text']));&#13;
+   Zabbix.Log(zbx_debug_level, 'Telegram failed: ' + error);&#13;
+   result = {};&#13;
+}&#13;
+//Zabbix.Log(zbx_debug_level, 'Telegram response: ' + JSON.stringify(result));&#13;
+return JSON.stringify(result);&#13;
+</script>
+            <event_menu_url>https://t.me/botfather</event_menu_url>
+            <event_menu_name>Telegram to 'botfather'</event_menu_name>
+            <description>Blog: https://blog.programs74.ru/&#13;
+Email: sleuthhound[at]programs74.ru&#13;
+Telegram: @CHERTS</description>
+        </media_type>
+    </media_types>
+</zabbix_export>
