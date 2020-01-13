@@ -1,0 +1,48 @@
+[ZBXNEXT-5554] added webhook through proxy
+--- src/libs/zbxembed/httprequest.c.orig	2020-01-13 20:39:28.047863616 +0300
++++ src/libs/zbxembed/httprequest.c	2020-01-13 20:40:28.373326654 +0300
+@@ -299,6 +299,26 @@
+ 
+ /******************************************************************************
+  *                                                                            *
++ * Function: es_httprequest_set_proxy                                         *
++ *                                                                            *
++ * Purpose: CurlHttpRequest.SetProxy method                                   *
++ *                                                                            *
++ ******************************************************************************/
++static duk_ret_t    es_httprequest_set_proxy(duk_context *ctx)
++{
++    zbx_es_httprequest_t    *request;
++    CURLcode        err;
++
++    if (NULL == (request = es_httprequest(ctx)))
++        return duk_error(ctx, DUK_RET_TYPE_ERROR, "internal scripting error: null object");
++
++    ZBX_CURL_SETOPT(ctx, request->handle, CURLOPT_PROXY, duk_to_string(ctx, 0), err);
++
++    return 1;
++}
++
++/******************************************************************************
++ *                                                                            *
+  * Function: es_httprequest_status                                            *
+  *                                                                            *
+  * Purpose: CurlHttpRequest.Status method                                     *
+@@ -329,6 +349,7 @@
+ 	{"Post", es_httprequest_post, 2},
+ 	{"Delete", es_httprequest_delete, 2},
+ 	{"Status", es_httprequest_status, 0},
++	{"SetProxy", es_httprequest_set_proxy, 1},
+ 	{NULL, NULL, 0}
+ };
+ 
+--- frontends/php/app/controllers/CControllerMediatypeEdit.php.orig	2020-01-13 20:38:39.133299030 +0300
++++ frontends/php/app/controllers/CControllerMediatypeEdit.php	2020-01-13 20:39:18.036952727 +0300
+@@ -141,6 +141,7 @@
+ 			'event_menu_name' => $db_defaults['event_menu_name'],
+ 			'parameters' => [
+ 				['name' => 'URL', 'value'=> ''],
++				['name' => 'HTTPProxy', 'value'=> ''],
+ 				['name' => 'To', 'value' => '{ALERT.SENDTO}'],
+ 				['name' => 'Subject', 'value' => '{ALERT.SUBJECT}'],
+ 				['name' => 'Message', 'value' => '{ALERT.MESSAGE}']
