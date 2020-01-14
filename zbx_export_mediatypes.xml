@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>4.4</version>
-    <date>2019-11-06T09:04:41Z</date>
+    <date>2020-01-14T05:25:03Z</date>
     <media_types>
         <media_type>
             <name>Telegram via Webhook</name>
@@ -31,6 +31,10 @@
                     <name>chat_id</name>
                     <value>{ALERT.SENDTO}</value>
                 </parameter>
+                <parameter>
+                    <name>HTTPProxy</name>
+                    <value></value>
+                </parameter>
             </parameters>
             <script>try {&#13;
    zbx_debug_level = 3;&#13;
@@ -40,6 +44,10 @@
    fields = {};&#13;
    var result = {'chat_id': params.chat_id}; &#13;
    req.AddHeader('Content-Type: application/json');&#13;
+   if (params.HTTPProxy) {&#13;
+     req.SetProxy(params.HTTPProxy);&#13;
+     Zabbix.Log(zbx_debug_level, 'Webhook via proxy: ' + params.HTTPProxy);&#13;
+   }&#13;
    // Docs: https://tlgrm.ru/docs/bots/api#sendmessage&#13;
    fields.chat_id = params.chat_id;&#13;
    fields.parse_mode = params.parse_mode; //markdown or html&#13;
@@ -72,11 +80,13 @@
 //Zabbix.Log(zbx_debug_level, 'Telegram response: ' + JSON.stringify(result));&#13;
 return JSON.stringify(result);&#13;
 </script>
+            <timeout>5s</timeout>
             <event_menu_url>https://t.me/botfather</event_menu_url>
             <event_menu_name>Telegram to 'botfather'</event_menu_name>
             <description>Blog: https://blog.programs74.ru/&#13;
 Email: sleuthhound[at]programs74.ru&#13;
-Telegram: @CHERTS</description>
+Telegram: @CHERTS&#13;
+Version: 1.1</description>
         </media_type>
     </media_types>
 </zabbix_export>
