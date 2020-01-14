@@ -1,23 +1,23 @@
-# Отправка уведомлений из Zabbix 4.4 в Telegram через Webhook использую HTTP прокси
+# РћС‚РїСЂР°РІРєР° СѓРІРµРґРѕРјР»РµРЅРёР№ РёР· Zabbix 4.4 РІ Telegram С‡РµСЂРµР· Webhook РёСЃРїРѕР»СЊР·СѓСЋ HTTP РїСЂРѕРєСЃРё
 
-Использование HTTP прокси в Webhook станет возможным только в Zabbix v5.0, но я бэкпортировал патчь (ZBXNEXT-5554) для версии 4.4
+РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ HTTP РїСЂРѕРєСЃРё РІ Webhook СЃС‚Р°РЅРµС‚ РІРѕР·РјРѕР¶РЅС‹Рј С‚РѕР»СЊРєРѕ РІ Zabbix v5.0, РЅРѕ СЏ Р±СЌРєРїРѕСЂС‚РёСЂРѕРІР°Р» РїР°С‚С‡СЊ (ZBXNEXT-5554) РґР»СЏ РІРµСЂСЃРёРё 4.4
 
-Если Вы опытный пользователь, то сможете пересобрать Zabbix из исходников и применить данный патч.
+Р•СЃР»Рё Р’С‹ РѕРїС‹С‚РЅС‹Р№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ, С‚Рѕ СЃРјРѕР¶РµС‚Рµ РїРµСЂРµСЃРѕР±СЂР°С‚СЊ Zabbix РёР· РёСЃС…РѕРґРЅРёРєРѕРІ Рё РїСЂРёРјРµРЅРёС‚СЊ РґР°РЅРЅС‹Р№ РїР°С‚С‡.
 
-Сcылка на сам патч [здесь](https://github.com/CHERTS/zabbix_telegram_webhook/tree/master/patch)
+РЎcС‹Р»РєР° РЅР° СЃР°Рј РїР°С‚С‡ [Р·РґРµСЃСЊ](https://github.com/CHERTS/zabbix_telegram_webhook/tree/master/patch)
 
-Ниже инструкции по пересборке Zabbix v4.4 из исходного кода под разные ОС.
+РќРёР¶Рµ РёРЅСЃС‚СЂСѓРєС†РёРё РїРѕ РїРµСЂРµСЃР±РѕСЂРєРµ Zabbix v4.4 РёР· РёСЃС…РѕРґРЅРѕРіРѕ РєРѕРґР° РїРѕРґ СЂР°Р·РЅС‹Рµ РћРЎ.
 
-[Сборка на Oracle Linux 7 с поддержкой MySQL (MariaDB)](#oracle-linux-7)
+[РЎР±РѕСЂРєР° РЅР° Oracle Linux 7 СЃ РїРѕРґРґРµСЂР¶РєРѕР№ MySQL (MariaDB)](#oracle-linux-7)
 
-[Сборка на Red Hat Enterprise Linux 8 с поддержкой MySQL (MariaDB)](#red-hat-enterprise-linux-8)
+[РЎР±РѕСЂРєР° РЅР° Red Hat Enterprise Linux 8 СЃ РїРѕРґРґРµСЂР¶РєРѕР№ MySQL (MariaDB)](#red-hat-enterprise-linux-8)
 
-[Сборка на Ubuntu 18.04 LTS (Bionic Beaver) с поддержкой MySQL (MariaDB)](#ubuntu)
+[РЎР±РѕСЂРєР° РЅР° Ubuntu 18.04 LTS (Bionic Beaver) СЃ РїРѕРґРґРµСЂР¶РєРѕР№ MySQL (MariaDB)](#ubuntu)
 
 # Oracle Linux 7
-## Сборка на Oracle Linux 7 с поддержкой MySQL (MariaDB)
+## РЎР±РѕСЂРєР° РЅР° Oracle Linux 7 СЃ РїРѕРґРґРµСЂР¶РєРѕР№ MySQL (MariaDB)
 
-### 1. Для подготовки к сборки на Oracle Linux 7 нужно установить дополнительные пакеты:
+### 1. Р”Р»СЏ РїРѕРґРіРѕС‚РѕРІРєРё Рє СЃР±РѕСЂРєРё РЅР° Oracle Linux 7 РЅСѓР¶РЅРѕ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РїР°РєРµС‚С‹:
 
 ~~~~
 yum group install "Development Tools"
@@ -27,7 +27,7 @@ yum install -y wget unzip gettext java-1.8.0-openjdk libxml2-devel openssl-devel
 yum install -y MariaDB-client MariaDB-devel MariaDB-shared
 ~~~~
 
-### 2. Скачать и распаковать свежую версию исходного кода и применить патч ZBXNEXT-5554:
+### 2. РЎРєР°С‡Р°С‚СЊ Рё СЂР°СЃРїР°РєРѕРІР°С‚СЊ СЃРІРµР¶СѓСЋ РІРµСЂСЃРёСЋ РёСЃС…РѕРґРЅРѕРіРѕ РєРѕРґР° Рё РїСЂРёРјРµРЅРёС‚СЊ РїР°С‚С‡ ZBXNEXT-5554:
 
 ~~~~
 wget https://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/4.4.4/zabbix-4.4.4.tar.gz/download -O zabbix-4.4.4.tar.gz
@@ -37,37 +37,37 @@ wget https://raw.githubusercontent.com/CHERTS/zabbix_telegram_webhook/master/pat
 patch -p0 < ZBXNEXT-5554.patch
 ~~~~
 
-### 3. Сборка всех компонентов Zabbix с поддержкой (MariaDB) MySQL:
+### 3. РЎР±РѕСЂРєР° РІСЃРµС… РєРѕРјРїРѕРЅРµРЅС‚РѕРІ Zabbix СЃ РїРѕРґРґРµСЂР¶РєРѕР№ (MariaDB) MySQL:
 
 ~~~~
 ./configure --with-libpthread --with-libpcre --with-libcurl --with-libxml2 --with-net-snmp --with-openssl --enable-ipv6 --with-ssh2 --with-openipmi --with-unixodbc --with-ldap --enable-server --sysconfdir=/etc/zabbix --with-mysql
 make
 ~~~~
 
-### 4. После успешной сборки на шаге 3 можно использовать бинарный файл zabbix_server, скопируем его в текущий каталог:
+### 4. РџРѕСЃР»Рµ СѓСЃРїРµС€РЅРѕР№ СЃР±РѕСЂРєРё РЅР° С€Р°РіРµ 3 РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Р±РёРЅР°СЂРЅС‹Р№ С„Р°Р№Р» zabbix_server, СЃРєРѕРїРёСЂСѓРµРј РµРіРѕ РІ С‚РµРєСѓС‰РёР№ РєР°С‚Р°Р»РѕРі:
 
 ~~~~
 cp src/zabbix_server/zabbix_server zabbix_server_mysql_v444
 ~~~~
 
-Проверим наличие бинарных файлов:
+РџСЂРѕРІРµСЂРёРј РЅР°Р»РёС‡РёРµ Р±РёРЅР°СЂРЅС‹С… С„Р°Р№Р»РѕРІ:
 
 ~~~~
 # ls -l | grep 'zabbix_'
 -rwxr-xr-x  1 root root 9768704 Jan 14 08:46 zabbix_server_mysql_v444
 ~~~~
 
-Теперь Вы можете остановить свои zabbix-server и заменить его данной сборкой.
+РўРµРїРµСЂСЊ Р’С‹ РјРѕР¶РµС‚Рµ РѕСЃС‚Р°РЅРѕРІРёС‚СЊ СЃРІРѕРё zabbix-server Рё Р·Р°РјРµРЅРёС‚СЊ РµРіРѕ РґР°РЅРЅРѕР№ СЃР±РѕСЂРєРѕР№.
 
-Так же Вам нужно заменить 1 файл в web-frontend:
+РўР°Рє Р¶Рµ Р’Р°Рј РЅСѓР¶РЅРѕ Р·Р°РјРµРЅРёС‚СЊ 1 С„Р°Р№Р» РІ web-frontend:
 ~~~~
 # cp frontends/php/app/controllers/CControllerMediatypeEdit.php /your-web-frontend-root-directory/app/controllers
 ~~~~
 
 # Red Hat Enterprise Linux 8
-## Сборка на Red Hat Enterprise Linux 8 с поддержкой MySQL (MariaDB)
+## РЎР±РѕСЂРєР° РЅР° Red Hat Enterprise Linux 8 СЃ РїРѕРґРґРµСЂР¶РєРѕР№ MySQL (MariaDB)
 
-### 1. Для подготовки к сборки на Red Hat Enterprise Linux 8 нужно установить дополнительные пакеты:
+### 1. Р”Р»СЏ РїРѕРґРіРѕС‚РѕРІРєРё Рє СЃР±РѕСЂРєРё РЅР° Red Hat Enterprise Linux 8 РЅСѓР¶РЅРѕ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РїР°РєРµС‚С‹:
 
 ~~~~
 dnf group install "Development Tools"
@@ -78,7 +78,7 @@ yum module enable -y virt-devel
 dnf install -y libssh2-devel OpenIPMI-devel
 ~~~~
 
-### 2. Скачать и распаковать свежую версию исходного кода:
+### 2. РЎРєР°С‡Р°С‚СЊ Рё СЂР°СЃРїР°РєРѕРІР°С‚СЊ СЃРІРµР¶СѓСЋ РІРµСЂСЃРёСЋ РёСЃС…РѕРґРЅРѕРіРѕ РєРѕРґР°:
 
 ~~~~
 wget https://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/4.4.4/zabbix-4.4.4.tar.gz/download -O zabbix-4.4.4.tar.gz
@@ -88,44 +88,44 @@ wget https://raw.githubusercontent.com/CHERTS/zabbix_telegram_webhook/master/pat
 patch -p0 < ZBXNEXT-5554.patch
 ~~~~
 
-### 3. Сборка всех компонентов Zabbix с поддержкой (MariaDB) MySQL:
+### 3. РЎР±РѕСЂРєР° РІСЃРµС… РєРѕРјРїРѕРЅРµРЅС‚РѕРІ Zabbix СЃ РїРѕРґРґРµСЂР¶РєРѕР№ (MariaDB) MySQL:
 
 ~~~~
 ./configure --with-libpthread --with-libpcre --with-libcurl --with-libxml2 --with-net-snmp --with-openssl --enable-ipv6 --with-ssh2 --with-openipmi --with-unixodbc --with-ldap --enable-server --sysconfdir=/etc/zabbix --with-mysql
 make
 ~~~~
 
-### 4. После успешной сборки на шаге 3 можно использовать бинарные файлы zabbix, скопируем их в текущий каталог:
+### 4. РџРѕСЃР»Рµ СѓСЃРїРµС€РЅРѕР№ СЃР±РѕСЂРєРё РЅР° С€Р°РіРµ 3 РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Р±РёРЅР°СЂРЅС‹Рµ С„Р°Р№Р»С‹ zabbix, СЃРєРѕРїРёСЂСѓРµРј РёС… РІ С‚РµРєСѓС‰РёР№ РєР°С‚Р°Р»РѕРі:
 
 ~~~~
 cp src/zabbix_server/zabbix_server zabbix_server_mysql_v444
 ~~~~
 
-Проверим наличие бинарных файлов:
+РџСЂРѕРІРµСЂРёРј РЅР°Р»РёС‡РёРµ Р±РёРЅР°СЂРЅС‹С… С„Р°Р№Р»РѕРІ:
 
 ~~~~
 # ls -l | grep 'zabbix_'
 -rwxr-xr-x  1 root root 9768704 Jan 14 08:46 zabbix_server_mysql_v444
 ~~~~
 
-Теперь Вы можете остановить свои zabbix-server и заменить его данной сборкой.
+РўРµРїРµСЂСЊ Р’С‹ РјРѕР¶РµС‚Рµ РѕСЃС‚Р°РЅРѕРІРёС‚СЊ СЃРІРѕРё zabbix-server Рё Р·Р°РјРµРЅРёС‚СЊ РµРіРѕ РґР°РЅРЅРѕР№ СЃР±РѕСЂРєРѕР№.
 
-Так же Вам нужно заменить 1 файл в web-frontend:
+РўР°Рє Р¶Рµ Р’Р°Рј РЅСѓР¶РЅРѕ Р·Р°РјРµРЅРёС‚СЊ 1 С„Р°Р№Р» РІ web-frontend:
 ~~~~
 # cp frontends/php/app/controllers/CControllerMediatypeEdit.php /your-web-frontend-root-directory/app/controllers
 ~~~~
 
 # Ubuntu
-## Сборка на Ubuntu 18.04 LTS (Bionic Beaver) с поддержкой MariaDB
+## РЎР±РѕСЂРєР° РЅР° Ubuntu 18.04 LTS (Bionic Beaver) СЃ РїРѕРґРґРµСЂР¶РєРѕР№ MariaDB
 
-### 1. Для подготовки к сборки на Ubuntu 18.04 нужно установить дополнительные пакеты:
+### 1. Р”Р»СЏ РїРѕРґРіРѕС‚РѕРІРєРё Рє СЃР±РѕСЂРєРё РЅР° Ubuntu 18.04 РЅСѓР¶РЅРѕ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РїР°РєРµС‚С‹:
 
 ~~~~
 sudo apt-get update
 sudo apt-get install -y autoconf automake gcc make wget unzip gettext default-jdk libxml2-dev libssl-dev libcurl4-openssl-dev libsnmp-dev libevent-dev libsqlite3-dev libpcre2-dev libssh2-1-dev libiksemel-dev libmariadbclient-dev-compat libopenipmi-dev unixodbc-dev libldap2-dev
 ~~~~
 
-### 2. Скачать и распаковать свежую версию исходного кода:
+### 2. РЎРєР°С‡Р°С‚СЊ Рё СЂР°СЃРїР°РєРѕРІР°С‚СЊ СЃРІРµР¶СѓСЋ РІРµСЂСЃРёСЋ РёСЃС…РѕРґРЅРѕРіРѕ РєРѕРґР°:
 
 ~~~~
 wget https://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/4.4.4/zabbix-4.4.4.tar.gz/download -O zabbix-4.4.4.tar.gz
@@ -135,7 +135,7 @@ wget https://raw.githubusercontent.com/CHERTS/zabbix_telegram_webhook/master/pat
 patch -p0 < ZBXNEXT-5554.patch
 ~~~~
 
-### 3. Сборка всех компонентов Zabbix с поддержкой (MariaDB) MySQL:
+### 3. РЎР±РѕСЂРєР° РІСЃРµС… РєРѕРјРїРѕРЅРµРЅС‚РѕРІ Zabbix СЃ РїРѕРґРґРµСЂР¶РєРѕР№ (MariaDB) MySQL:
 
 ~~~~
 ./configure --with-libpthread --with-libpcre --with-libcurl --with-libxml2 --with-net-snmp --with-openssl --enable-ipv6 --with-ssh2 --with-jabber --with-openipmi --with-unixodbc --with-ldap --enable-server --sysconfdir=/etc/zabbix --with-mysql
@@ -143,22 +143,22 @@ make
 make gettext
 ~~~~
 
-### 4. После успешной сборки на шаге 3 можно использовать бинарные файлы zabbix, скопируем их в текущий каталог:
+### 4. РџРѕСЃР»Рµ СѓСЃРїРµС€РЅРѕР№ СЃР±РѕСЂРєРё РЅР° С€Р°РіРµ 3 РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Р±РёРЅР°СЂРЅС‹Рµ С„Р°Р№Р»С‹ zabbix, СЃРєРѕРїРёСЂСѓРµРј РёС… РІ С‚РµРєСѓС‰РёР№ РєР°С‚Р°Р»РѕРі:
 
 ~~~~
 cp src/zabbix_server/zabbix_server zabbix_server_mysql_v444
 ~~~~
 
-Проверим наличие бинарных файлов:
+РџСЂРѕРІРµСЂРёРј РЅР°Р»РёС‡РёРµ Р±РёРЅР°СЂРЅС‹С… С„Р°Р№Р»РѕРІ:
 
 ~~~~
 # ls -l | grep 'zabbix_'
 -rwxr-xr-x  1 root root 9768704 Jan 14 08:46 zabbix_server_mysql_v444
 ~~~~
 
-Теперь Вы можете остановить свои zabbix-server и заменить его данной сборкой.
+РўРµРїРµСЂСЊ Р’С‹ РјРѕР¶РµС‚Рµ РѕСЃС‚Р°РЅРѕРІРёС‚СЊ СЃРІРѕРё zabbix-server Рё Р·Р°РјРµРЅРёС‚СЊ РµРіРѕ РґР°РЅРЅРѕР№ СЃР±РѕСЂРєРѕР№.
 
-Так же Вам нужно заменить 1 файл в web-frontend:
+РўР°Рє Р¶Рµ Р’Р°Рј РЅСѓР¶РЅРѕ Р·Р°РјРµРЅРёС‚СЊ 1 С„Р°Р№Р» РІ web-frontend:
 ~~~~
 # cp frontends/php/app/controllers/CControllerMediatypeEdit.php /your-web-frontend-root-directory/app/controllers
 ~~~~
