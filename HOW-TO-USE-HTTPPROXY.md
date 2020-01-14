@@ -23,7 +23,7 @@ Below are instructions for rebuilding Zabbix v4.4 from source code for different
 yum group install "Development Tools"
 yum-config-manager --enable ol7_optional_latest
 yum-config-manager --enable ol7_developer
-yum install -y wget unzip gettext java-1.8.0-openjdk libxml2-devel openssl-devel libcurl-devel net-snmp-devel libevent-devel sqlite-devel pcre-devel libssh2-devel iksemel-devel OpenIPMI-devel unixODBC-devel openldap-devel
+yum install -y wget unzip gettext java-1.8.0-openjdk libxml2-devel openssl-devel libcurl-devel net-snmp-devel libevent-devel sqlite-devel pcre-devel libssh2-devel OpenIPMI-devel unixODBC-devel openldap-devel
 yum install -y MariaDB-client MariaDB-devel MariaDB-shared
 ~~~~
 
@@ -122,7 +122,7 @@ You also need to replace 1 file in the web-frontend:
 
 ~~~~
 sudo apt-get update
-sudo apt-get install -y autoconf automake gcc make wget unzip gettext default-jdk libxml2-dev libssl-dev libcurl4-openssl-dev libsnmp-dev libevent-dev libsqlite3-dev libpcre2-dev libssh2-1-dev libiksemel-dev libmariadbclient-dev-compat libopenipmi-dev unixodbc-dev libldap2-dev
+sudo apt-get install -y autoconf automake gcc make wget unzip gettext default-jdk libxml2-dev libssl-dev libcurl4-openssl-dev libsnmp-dev libevent-dev libsqlite3-dev libpcre2-dev libssh2-1-dev libmariadbclient-dev-compat libopenipmi-dev unixodbc-dev libldap2-dev
 ~~~~
 
 ### 2. Download and unzip the latest version of the source code:
