@@ -30,9 +30,9 @@ yum install -y MariaDB-client MariaDB-devel MariaDB-shared
 ### 2. Скачать и распаковать свежую версию исходного кода и применить патч ZBXNEXT-5554:
 
 ~~~~
-wget https://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/4.4.4/zabbix-4.4.4.tar.gz/download -O zabbix-4.4.4.tar.gz
-tar -zxf zabbix-4.4.4.tar.gz
-cd zabbix-4.4.4
+wget https://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/4.4.5/zabbix-4.4.5.tar.gz/download -O zabbix-4.4.5.tar.gz
+tar -zxf zabbix-4.4.5.tar.gz
+cd zabbix-4.4.5
 wget https://raw.githubusercontent.com/CHERTS/zabbix_telegram_webhook/master/patch/ZBXNEXT-5554.patch
 patch -p0 < ZBXNEXT-5554.patch
 ~~~~
@@ -81,9 +81,9 @@ dnf install -y libssh2-devel OpenIPMI-devel
 ### 2. Скачать и распаковать свежую версию исходного кода:
 
 ~~~~
-wget https://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/4.4.4/zabbix-4.4.4.tar.gz/download -O zabbix-4.4.4.tar.gz
-tar -zxf zabbix-4.4.4.tar.gz
-cd zabbix-4.4.4
+wget https://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/4.4.5/zabbix-4.4.5.tar.gz/download -O zabbix-4.4.5.tar.gz
+tar -zxf zabbix-4.4.5.tar.gz
+cd zabbix-4.4.5
 wget https://raw.githubusercontent.com/CHERTS/zabbix_telegram_webhook/master/patch/ZBXNEXT-5554.patch
 patch -p0 < ZBXNEXT-5554.patch
 ~~~~
@@ -128,9 +128,9 @@ sudo apt-get install -y autoconf automake gcc make wget unzip gettext default-jd
 ### 2. Скачать и распаковать свежую версию исходного кода:
 
 ~~~~
-wget https://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/4.4.4/zabbix-4.4.4.tar.gz/download -O zabbix-4.4.4.tar.gz
-tar -zxf zabbix-4.4.4.tar.gz
-cd zabbix-4.4.4
+wget https://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/4.4.5/zabbix-4.4.5.tar.gz/download -O zabbix-4.4.5.tar.gz
+tar -zxf zabbix-4.4.5.tar.gz
+cd zabbix-4.4.5
 wget https://raw.githubusercontent.com/CHERTS/zabbix_telegram_webhook/master/patch/ZBXNEXT-5554.patch
 patch -p0 < ZBXNEXT-5554.patch
 ~~~~
