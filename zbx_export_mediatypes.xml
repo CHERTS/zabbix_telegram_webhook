@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>4.4</version>
-    <date>2020-01-14T05:25:03Z</date>
+    <date>2020-02-20T09:33:32Z</date>
     <media_types>
         <media_type>
             <name>Telegram via Webhook</name>
@@ -33,7 +33,7 @@
                 </parameter>
                 <parameter>
                     <name>HTTPProxy</name>
-                    <value></value>
+                    <value/>
                 </parameter>
             </parameters>
             <script>try {&#13;
@@ -50,12 +50,22 @@
    }&#13;
    // Docs: https://tlgrm.ru/docs/bots/api#sendmessage&#13;
    fields.chat_id = params.chat_id;&#13;
-   fields.parse_mode = params.parse_mode; //markdown or html&#13;
+   if (params.parse_mode === 'html' || params.parse_mode === 'markdown' ) {&#13;
+      fields.parse_mode = params.parse_mode; //markdown or html&#13;
+   } else {&#13;
+      fields.parse_mode = 'html';&#13;
+   }&#13;
    fields.disable_web_page_preview = params.disable_web_page_preview; //true or false&#13;
    params.message = params.message.replace(/\\U\+([\d\w]{4,5})/gi, function(match, grp) {&#13;
         return String.fromCharCode(parseInt(grp, 16));&#13;
    });&#13;
    fields.text = params.subj + '\r\n' + params.message;&#13;
+   if (fields.parse_mode === 'html') {&#13;
+      fields.text = fields.text.replace(/&amp;/g, &quot;&amp;amp;&quot;);&#13;
+      fields.text = fields.text.replace(/&lt;/g, &quot;&amp;lt;&quot;);&#13;
+      fields.text = fields.text.replace(/&gt;/g, &quot;&amp;gt;&quot;);&#13;
+      fields.text = fields.text.replace(/&quot;/g, &quot;&amp;quot;&quot;);&#13;
+   }&#13;
    raw_response = req.Post('https://api.telegram.org/bot' + params.token + '/sendMessage',&#13;
        JSON.stringify(fields, ['chat_id', 'parse_mode', 'disable_web_page_preview', 'text'])&#13;
    );&#13;
@@ -86,7 +96,7 @@ return JSON.stringify(result);&#13;
             <description>Blog: https://blog.programs74.ru/&#13;
 Email: sleuthhound[at]programs74.ru&#13;
 Telegram: @CHERTS&#13;
-Version: 1.1</description>
+Version: 1.2</description>
         </media_type>
     </media_types>
 </zabbix_export>
