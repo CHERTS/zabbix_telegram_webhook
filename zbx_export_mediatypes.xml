@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>4.4</version>
-    <date>2020-02-20T09:33:32Z</date>
+    <date>2020-03-13T05:00:21Z</date>
     <media_types>
         <media_type>
             <name>Telegram via Webhook</name>
             <type>WEBHOOK</type>
             <parameters>
                 <parameter>
-                    <name>subj</name>
-                    <value>{ALERT.SUBJECT}</value>
-                </parameter>
-                <parameter>
-                    <name>message</name>
-                    <value>{ALERT.MESSAGE}</value>
-                </parameter>
-                <parameter>
-                    <name>token</name>
-                    <value>XXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</value>
-                </parameter>
-                <parameter>
-                    <name>parse_mode</name>
-                    <value>html</value>
+                    <name>chat_id</name>
+                    <value>{ALERT.SENDTO}</value>
                 </parameter>
                 <parameter>
                     <name>disable_web_page_preview</name>
                     <value>true</value>
                 </parameter>
                 <parameter>
-                    <name>chat_id</name>
-                    <value>{ALERT.SENDTO}</value>
-                </parameter>
-                <parameter>
                     <name>HTTPProxy</name>
                     <value/>
+                </parameter>
+                <parameter>
+                    <name>message</name>
+                    <value>{ALERT.MESSAGE}</value>
+                </parameter>
+                <parameter>
+                    <name>parse_mode</name>
+                    <value>html</value>
+                </parameter>
+                <parameter>
+                    <name>subj</name>
+                    <value>{ALERT.SUBJECT}</value>
+                </parameter>
+                <parameter>
+                    <name>token</name>
+                    <value>XXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</value>
                 </parameter>
             </parameters>
             <script>try {&#13;
@@ -88,15 +88,12 @@
    result = {};&#13;
 }&#13;
 //Zabbix.Log(zbx_debug_level, 'Telegram response: ' + JSON.stringify(result));&#13;
-return JSON.stringify(result);&#13;
-</script>
+return JSON.stringify(result);</script>
             <timeout>5s</timeout>
-            <event_menu_url>https://t.me/botfather</event_menu_url>
-            <event_menu_name>Telegram to 'botfather'</event_menu_name>
             <description>Blog: https://blog.programs74.ru/&#13;
 Email: sleuthhound[at]programs74.ru&#13;
 Telegram: @CHERTS&#13;
-Version: 1.2</description>
+Version: 1.3</description>
         </media_type>
     </media_types>
 </zabbix_export>
