@@ -128,7 +128,7 @@ sudo apt-get install -y autoconf automake gcc make wget unzip gettext default-jd
 ### 2. Download and unzip the latest version of the source code:
 
 ~~~~
-wget https://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/4.4.8/zabbix-4.4.8.tar.gz/download -O zabbix-4.4.8.tar.gz
+wget https://cdn.zabbix.com/stable/4.4.8/zabbix-4.4.8.tar.gz
 tar -zxf zabbix-4.4.8.tar.gz
 cd zabbix-4.4.8
 wget https://raw.githubusercontent.com/CHERTS/zabbix_telegram_webhook/master/patch/ZBXNEXT-5554.patch
