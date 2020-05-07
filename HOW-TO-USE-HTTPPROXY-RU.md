@@ -30,7 +30,7 @@ yum install -y MariaDB-client MariaDB-devel MariaDB-shared
 ### 2. Скачать и распаковать свежую версию исходного кода и применить патч ZBXNEXT-5554:
 
 ~~~~
-wget https://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/4.4.8/zabbix-4.4.8.tar.gz/download -O zabbix-4.4.8.tar.gz
+wget https://cdn.zabbix.com/stable/4.4.8/zabbix-4.4.8.tar.gz
 tar -zxf zabbix-4.4.8.tar.gz
 cd zabbix-4.4.8
 wget https://raw.githubusercontent.com/CHERTS/zabbix_telegram_webhook/master/patch/ZBXNEXT-5554.patch
@@ -81,7 +81,7 @@ dnf install -y libssh2-devel OpenIPMI-devel
 ### 2. Скачать и распаковать свежую версию исходного кода:
 
 ~~~~
-wget https://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/4.4.8/zabbix-4.4.8.tar.gz/download -O zabbix-4.4.8.tar.gz
+wget https://cdn.zabbix.com/stable/4.4.8/zabbix-4.4.8.tar.gz
 tar -zxf zabbix-4.4.8.tar.gz
 cd zabbix-4.4.8
 wget https://raw.githubusercontent.com/CHERTS/zabbix_telegram_webhook/master/patch/ZBXNEXT-5554.patch
