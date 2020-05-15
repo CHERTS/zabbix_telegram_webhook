@@ -1,4 +1,4 @@
-# Sending notifications from Zabbix 4.4 to Telegram via Webhook
+# Sending notifications from Zabbix 4.4/5.0 to Telegram via Webhook
 
 [По-русски / In Russian](README.ru.md)
 
