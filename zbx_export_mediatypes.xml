@@ -29,7 +29,7 @@
                 </parameter>
                 <parameter>
                     <name>parse_mode</name>
-                    <value>html</value>
+                    <value>HTML</value>
                 </parameter>
                 <parameter>
                     <name>subj</name>
@@ -54,10 +54,10 @@
    }&#13;
    // Docs: https://tlgrm.ru/docs/bots/api#sendmessage&#13;
    fields.chat_id = params.chat_id;&#13;
-   if (params.parse_mode === 'html' || params.parse_mode === 'markdown' ) {&#13;
-      fields.parse_mode = params.parse_mode; //markdown or html&#13;
+   if (params.parse_mode === 'HTML' || params.parse_mode === 'markdown' ) {&#13;
+      fields.parse_mode = params.parse_mode; //HTML or markdown&#13;
    } else {&#13;
-      fields.parse_mode = 'html';&#13;
+      fields.parse_mode = 'HTML';&#13;
    }&#13;
    fields.disable_notification = params.disable_notification; //true or false&#13;
    fields.disable_web_page_preview = params.disable_web_page_preview; //true or false&#13;
@@ -65,7 +65,7 @@
         return String.fromCharCode(parseInt(grp, 16));&#13;
    });&#13;
    fields.text = params.subj + '\r\n' + params.message;&#13;
-   if (fields.parse_mode === 'html') {&#13;
+   if (fields.parse_mode === 'HTML') {&#13;
       fields.text = fields.text.replace(/&amp;/g, &quot;&amp;amp;&quot;);&#13;
       fields.text = fields.text.replace(/&lt;/g, &quot;&amp;lt;&quot;);&#13;
       fields.text = fields.text.replace(/&gt;/g, &quot;&amp;gt;&quot;);&#13;
