@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2020-10-15T04:51:07Z</date>
+    <media_types>
+        <media_type>
+            <name>Telegram via Webhook</name>
+            <type>WEBHOOK</type>
+            <parameters>
+                <parameter>
+                    <name>chat_id</name>
+                    <value>{ALERT.SENDTO}</value>
+                </parameter>
+                <parameter>
+                    <name>disable_notification</name>
+                    <value>false</value>
+                </parameter>
+                <parameter>
+                    <name>disable_web_page_preview</name>
+                    <value>true</value>
+                </parameter>
+                <parameter>
+                    <name>HTTPProxy</name>
+                    <value/>
+                </parameter>
+                <parameter>
+                    <name>message</name>
+                    <value>{ALERT.MESSAGE}</value>
+                </parameter>
+                <parameter>
+                    <name>parse_mode</name>
+                    <value>HTML</value>
+                </parameter>
+                <parameter>
+                    <name>subj</name>
+                    <value>{ALERT.SUBJECT}</value>
+                </parameter>
+                <parameter>
+                    <name>token</name>
+                    <value>XXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</value>
+                </parameter>
+            </parameters>
+            <script>try {&#13;
+   zbx_debug_level = 3;&#13;
+   // Uncomment Zabbix.Log if you want to see the exposed (subj, message, token, parse_mode and etc params) in the log file&#13;
+   //Zabbix.Log(zbx_debug_level, 'Telegram request value: ' + value);&#13;
+   params = JSON.parse(value),&#13;
+   req = new CurlHttpRequest(),&#13;
+   fields = {};&#13;
+   req.AddHeader('Content-Type: application/json');&#13;
+   if (params.HTTPProxy) {&#13;
+     req.SetProxy(params.HTTPProxy);&#13;
+     Zabbix.Log(zbx_debug_level, 'Telegram webhook via proxy: ' + params.HTTPProxy);&#13;
+   }&#13;
+   // Docs: https://tlgrm.ru/docs/bots/api#sendmessage&#13;
+   fields.chat_id = params.chat_id;&#13;
+   if (['Markdown', 'HTML', 'MarkdownV2'].indexOf(params.parse_mode) !== -1) {&#13;
+      fields.parse_mode = params.parse_mode;&#13;
+   } else {&#13;
+      fields.parse_mode = 'HTML';&#13;
+   }&#13;
+   fields.disable_notification = params.disable_notification; //true or false&#13;
+   fields.disable_web_page_preview = params.disable_web_page_preview; //true or false&#13;
+   params.message = params.message.replace(/\\U\+([\d\w]{4,5})/gi, function(match, grp) {&#13;
+        return String.fromCharCode(parseInt(grp, 16));&#13;
+   });&#13;
+   fields.text = params.subj + '\r\n' + params.message;&#13;
+   raw_response = req.Post('https://api.telegram.org/bot' + params.token + '/sendMessage',&#13;
+       JSON.stringify(fields, ['chat_id', 'parse_mode', 'disable_web_page_preview', 'disable_notification', 'text'])&#13;
+   );&#13;
+   resp = JSON.parse(JSON.stringify(raw_response))&#13;
+   json_resp = JSON.parse(raw_response);&#13;
+   Zabbix.Log(zbx_debug_level, 'Telegram HTTP response code: ' + req.Status());&#13;
+   var result = {tags: {}};&#13;
+   if (req.Status() === 200) {&#13;
+      Zabbix.Log(zbx_debug_level, 'Telegram response: ' + resp);&#13;
+      if (json_resp.ok) {&#13;
+          if (json_resp.result.chat.type === 'supergroup') {&#13;
+             var anum = /^\-?\d+(\.?\d+)?$/;&#13;
+             var tg_chat_id = 0;&#13;
+             if (anum.test(params.chat_id)) {&#13;
+                if (Number.isInteger(tg_chat_id)) {&#13;
+                   tg_chat_id = params.chat_id.replace(/-/g, &quot;&quot;);&#13;
+                   tg_chat_id = tg_chat_id.replace(/^100+/, &quot;&quot;);&#13;
+                } else {&#13;
+                   tg_chat_id = params.chat_id&#13;
+                }&#13;
+             } else {&#13;
+                tg_chat_id = params.chat_id&#13;
+             }&#13;
+             result.tags.tg_message_url = 'https://t.me/c/' + tg_chat_id + '/' + json_resp.result.message_id;&#13;
+             Zabbix.Log(zbx_debug_level, 'Telegram supergroup result: ' + JSON.stringify(result));&#13;
+             return JSON.stringify(result);&#13;
+          } else if (json_resp.result.chat.type === 'private') {&#13;
+             Zabbix.Log(zbx_debug_level, 'Telegram private result: ' + resp);&#13;
+             return resp;&#13;
+          } else if (json_resp.result.chat.type === 'group') {&#13;
+             Zabbix.Log(zbx_debug_level, 'Telegram group result: ' + resp);&#13;
+             return resp;&#13;
+          } else {&#13;
+             Zabbix.Log(zbx_debug_level, 'Telegram result: ' + resp);&#13;
+             return resp;&#13;
+          }&#13;
+      } else {&#13;
+          return resp;&#13;
+      }&#13;
+   } else {&#13;
+      throw resp;&#13;
+      return resp;&#13;
+   }&#13;
+} catch (error) {&#13;
+   Zabbix.Log(zbx_debug_level, 'Telegram failed json: ' + JSON.stringify(fields, ['chat_id', 'parse_mode', 'disable_web_page_preview', 'text']));&#13;
+   Zabbix.Log(zbx_debug_level, 'Telegram failed: ' + error);&#13;
+   throw &quot;Telegram failed: &quot; + error;&#13;
+}</script>
+            <timeout>5s</timeout>
+            <process_tags>YES</process_tags>
+            <show_event_menu>YES</show_event_menu>
+            <event_menu_url>{EVENT.TAGS.tg_message_url}</event_menu_url>
+            <event_menu_name>View alert in Telegram</event_menu_name>
+            <description>Blog: https://blog.programs74.ru/&#13;
+Email: sleuthhound[at]programs74.ru&#13;
+Telegram: @CHERTS&#13;
+Version: 1.5</description>
+        </media_type>
+    </media_types>
+</zabbix_export>
