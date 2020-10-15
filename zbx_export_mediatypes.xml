@@ -54,8 +54,8 @@
    }&#13;
    // Docs: https://tlgrm.ru/docs/bots/api#sendmessage&#13;
    fields.chat_id = params.chat_id;&#13;
-   if (params.parse_mode === 'HTML' || params.parse_mode === 'markdown' ) {&#13;
-      fields.parse_mode = params.parse_mode; //HTML or markdown&#13;
+   if (['Markdown', 'HTML', 'MarkdownV2'].indexOf(params.parse_mode) !== -1) {&#13;
+      fields.parse_mode = params.parse_mode;&#13;
    } else {&#13;
       fields.parse_mode = 'HTML';&#13;
    }&#13;
@@ -65,12 +65,6 @@
         return String.fromCharCode(parseInt(grp, 16));&#13;
    });&#13;
    fields.text = params.subj + '\r\n' + params.message;&#13;
-   if (fields.parse_mode === 'HTML') {&#13;
-      fields.text = fields.text.replace(/&amp;/g, &quot;&amp;amp;&quot;);&#13;
-      fields.text = fields.text.replace(/&lt;/g, &quot;&amp;lt;&quot;);&#13;
-      fields.text = fields.text.replace(/&gt;/g, &quot;&amp;gt;&quot;);&#13;
-      fields.text = fields.text.replace(/&quot;/g, &quot;&amp;quot;&quot;);&#13;
-   }&#13;
    raw_response = req.Post('https://api.telegram.org/bot' + params.token + '/sendMessage',&#13;
        JSON.stringify(fields, ['chat_id', 'parse_mode', 'disable_web_page_preview', 'disable_notification', 'text'])&#13;
    );&#13;
@@ -127,7 +121,7 @@
             <description>Blog: https://blog.programs74.ru/&#13;
 Email: sleuthhound[at]programs74.ru&#13;
 Telegram: @CHERTS&#13;
-Version: 1.4</description>
+Version: 1.5</description>
         </media_type>
     </media_types>
 </zabbix_export>
